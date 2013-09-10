@@ -32,14 +32,18 @@ def collatz_eval ((i, j)) :
 	j is the end of the range, inclusive
 	return the max cycle length in the range [i, j]
 	"""
-
+    cache = [-1] * 1000000
     #Quiz 3 optimization
     m = j / 2
     if (i < m):
         i = m
     maxCycleLength = 1
     for number in range(i, j):
-        numberCycleLength = collatz_single(number)
+        if (cache[number] == -1):      
+            numberCycleLength = collatz_single(number)
+            cache[number] = numberCycleLength
+        else:
+            numberCycleLength = cache[number]
         if (numberCycleLength > maxCycleLength):
             maxCycleLength = numberCycleLength
     return maxCycleLength
