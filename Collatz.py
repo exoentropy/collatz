@@ -32,6 +32,12 @@ def collatz_eval ((i, j)) :
 	j is the end of the range, inclusive
 	return the max cycle length in the range [i, j]
 	"""
+    #error checking; switch i and j if range is invalid
+    if (i > j):
+        iTemp = i
+        i = j
+        j = iTemp
+    #-1 implies that cache has not been written to for this number
     cache = [-1] * 1000000
     #Quiz 3 optimization
     m = j / 2
