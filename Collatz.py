@@ -50,7 +50,7 @@ def collatz_eval ((i, j)) :
     for number in range(i, j):
 
         if (cache[number] == -1):
-            numberCycleLength = collatz_single(number)
+            numberCycleLength = collatz_single(number, cache)
             cache[number] = numberCycleLength
             cacheWrite += 1
         
@@ -67,19 +67,22 @@ def collatz_eval ((i, j)) :
 # --------------
 # collatz_single
 # --------------
-def collatz_single (number):
+def collatz_single (number, cache):
 	"""
 	number is a single integer
 	return the collatz solution for a single number (to help collatz_eval function)
 	"""
-	cycles = 1
-	while (number > 1):
-		cycles += 1
-		if (number % 2 == 1):
-			number = (3 * number) + 1
-		else:
-			number = (number / 2)
-	return cycles
+	cycles = 0
+        while (number > 1):
+            if (cache[number] >= 1):
+                return cache[number] + cycles
+            cycles += 1
+            if (number % 2 == 0):
+                number = (3 * number) - 1
+            else:
+                number /= 2
+        return cycles
+
 	
 # -------------
 # collatz_print

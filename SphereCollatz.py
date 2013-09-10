@@ -28,6 +28,22 @@ def collatz_read (r) :
 # collatz_eval
 # ------------
 
+def collatz_read (r) :
+    """
+	r is a reader
+	returns an generator that iterates over a sequence of lists of ints of length 2
+	for s in r :
+	l = s.split()
+	b = int(l[0])
+	e = int(l[1])
+	yield [b, e]
+	"""
+    return (map(int, s.split()) for s in r)
+
+# ------------
+# collatz_eval
+# ------------
+
 def collatz_eval ((i, j)) :
     """
 	i is the beginning of the range, inclusive
@@ -46,37 +62,44 @@ def collatz_eval ((i, j)) :
     if (i < m):
         i = m
     maxCycleLength = 1
+    cacheAccess = 0
+    cacheWrite = 0
+    print (i, j)
     for number in range(i, j):
 
         if (cache[number] == -1):
-            numberCycleLength = collatz_single(number)
+            numberCycleLength = collatz_single(number, cache)
             cache[number] = numberCycleLength
-
-        if (cache[number] >= -1):
+            cacheWrite += 1
+        
+        if (cache[number] >= 1):
             numberCycleLength = cache[number]
+            cacheAccess += 1
 
         if (numberCycleLength > maxCycleLength):
             maxCycleLength = numberCycleLength
         
+    print ("cache accesses: ", cacheAccess)
     return maxCycleLength
 
 # --------------
 # collatz_single
 # --------------
-def collatz_single (number):
+def collatz_single (number, cache):
 	"""
 	number is a single integer
 	return the collatz solution for a single number (to help collatz_eval function)
 	"""
-	cycles = 1
-	while (number > 1):
-		cycles += 1
-		assert number >= 1
-		if (number % 2 == 1):
-			number = (3 * number) + 1
-		else:
-			number = (number / 2)
-	return cycles
+        cycles = 0
+        while (number > 1):
+            if (cache[number] >= 1):
+                return cache[number] + cycles
+            cycles += 1
+            if (number % 2 == 0):
+                number = (3 * number) - 1
+            else:
+                number /= 2
+        return cycles
 	
 # -------------
 # collatz_print
