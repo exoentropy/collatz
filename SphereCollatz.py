@@ -47,13 +47,17 @@ def collatz_eval ((i, j)) :
         i = m
     maxCycleLength = 1
     for number in range(i, j):
-        if (cache[number] == -1):      
+
+        if (cache[number] == -1):
             numberCycleLength = collatz_single(number)
             cache[number] = numberCycleLength
-        else:
+
+        if (cache[number] >= -1):
             numberCycleLength = cache[number]
+
         if (numberCycleLength > maxCycleLength):
             maxCycleLength = numberCycleLength
+        
     return maxCycleLength
 
 # --------------

@@ -44,14 +44,24 @@ def collatz_eval ((i, j)) :
     if (i < m):
         i = m
     maxCycleLength = 1
+    cacheAccess = 0
+    cacheWrite = 0
+    print (i, j)
     for number in range(i, j):
-        if (cache[number] == -1):      
+
+        if (cache[number] == -1):
             numberCycleLength = collatz_single(number)
             cache[number] = numberCycleLength
-        else:
+            cacheWrite += 1
+        
+        if (cache[number] >= 1):
             numberCycleLength = cache[number]
+            cacheAccess += 1
+
         if (numberCycleLength > maxCycleLength):
             maxCycleLength = numberCycleLength
+        
+    print ("cache accesses: ", cacheAccess)
     return maxCycleLength
 
 # --------------
@@ -65,7 +75,6 @@ def collatz_single (number):
 	cycles = 1
 	while (number > 1):
 		cycles += 1
-		assert number >= 1
 		if (number % 2 == 1):
 			number = (3 * number) + 1
 		else:
