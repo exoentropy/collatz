@@ -94,11 +94,25 @@ class TestCollatz (unittest.TestCase) :
         self.assert_(v == 6)
 
     #test cache check (note: wrong value used in cache to show that it was not computed by the function)
-    def test_collatz_single1 (self) :
+    def test_collatz_single2 (self) :
         number = 5
         cache = [-1, -1, -1, -1, -1, 8, -1, -1]
         v = collatz_single(number, cache)
         self.assert_(v == 8)
+
+    #test empty cache
+    def test_collatz_single3 (self) :
+        number = 3
+        cache = [-1, -1, -1, -1, -1, -1, -1, -1]
+        v = collatz_single(number, cache)
+        self.assert_(v == 8)
+
+    #test cache check (note: wrong value used in cache to show that it was not computed by the function)
+    def test_collatz_single4 (self) :
+        number = 3
+        cache = [-1, -1, -1, 5, -1, -1, -1, -1]
+        v = collatz_single(number, cache)
+        self.assert_(v == 5)
 
 # ----
 # main
