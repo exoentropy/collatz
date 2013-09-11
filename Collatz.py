@@ -44,7 +44,7 @@ def collatz_eval ((i, j)) :
     if (i < m):
         i = m
     maxCycleLength = 1
-    for number in range(i, j):
+    for number in range(i, j + 1):
         if (number < len(cache) and cache[number] != -1):
             numberCycleLength = cache[number]
         else:
