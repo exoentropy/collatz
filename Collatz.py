@@ -39,12 +39,12 @@ def collatz_eval ((i, j)) :
         iTemp = i
         i = j
         j = iTemp
-    assert i < j
+    assert i <= j
     #Quiz 3 optimization
     m = j / 2
     if (i < m):
         i = m
-    assert i < j
+    assert i <= j
     maxCycleLength = 1
     for number in range(i, j + 1):
         if (number < len(cache) and cache[number] != -1):
