@@ -32,56 +32,47 @@ def collatz_eval ((i, j)) :
 	j is the end of the range, inclusive
 	return the max cycle length in the range [i, j]
 	"""
+    #-1 implies that cache has not been written to for this number
+    cache = [-1] * 1000000
     #error checking; switch i and j if range is invalid
     if (i > j):
         iTemp = i
         i = j
         j = iTemp
-    #-1 implies that cache has not been written to for this number
-    cache = [-1] * 1000000
     #Quiz 3 optimization
     m = j / 2
     if (i < m):
         i = m
     maxCycleLength = 1
-    cacheAccess = 0
-    cacheWrite = 0
-    print (i, j)
     for number in range(i, j):
-
-        if (cache[number] == -1):
-            numberCycleLength = collatz_single(number, cache)
-            cache[number] = numberCycleLength
-            cacheWrite += 1
-        
-        if (cache[number] >= 1):
+        if (number < len(cache) and cache[number] != -1):
             numberCycleLength = cache[number]
-            cacheAccess += 1
-
+        else:
+            numberCycleLength = collatz_single(number, cache)
+            if (number < len(cache)):
+                cache[number] = numberCycleLength
         if (numberCycleLength > maxCycleLength):
             maxCycleLength = numberCycleLength
-        
-    print ("cache accesses: ", cacheAccess)
     return maxCycleLength
 
 # --------------
 # collatz_single
 # --------------
 def collatz_single (number, cache):
-	"""
-	number is a single integer
-	return the collatz solution for a single number (to help collatz_eval function)
-	"""
-	cycles = 0
-        while (number > 1):
-            if (cache[number] >= 1):
-                return cache[number] + cycles
-            cycles += 1
-            if (number % 2 == 0):
-                number = (3 * number) - 1
-            else:
-                number /= 2
-        return cycles
+    """
+    number is from the collatz_eval loop
+    evaluates the cylces for a single number
+    """
+    cycles = 1
+    while (number > 1):
+        if (number < len(cache) and cache[number] != -1):
+            return cycles + cache[number] - 1
+        cycles += 1
+        if (number % 2 == 1):
+            number = (3 * number) + 1
+        else:
+            number = (number / 2)
+    return cycles
 
 	
 # -------------
