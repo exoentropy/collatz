@@ -20,7 +20,7 @@ To test the program:
 import StringIO
 import unittest
 
-from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
+from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve, collatz_single
 
 # -----------
 # TestCollatz
@@ -58,6 +58,11 @@ class TestCollatz (unittest.TestCase) :
         v = collatz_eval((900, 1000))
         self.assert_(v == 174)
 
+    #edge case
+    def test_eval_5 (self) :
+        v = collatz_eval((1, 1))
+        self.assert_(v == 1)
+
     # -----
     # print
     # -----
@@ -76,6 +81,24 @@ class TestCollatz (unittest.TestCase) :
         w = StringIO.StringIO()
         collatz_solve(r, w)
         self.assert_(w.getvalue() == "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
+
+    # --------------
+    # collatz_single
+    # --------------
+    
+    #test empty cache
+    def test_collatz_single1 (self) :
+        number = 5
+        cache = [-1, -1, -1, -1, -1, -1, -1, -1]
+        v = collatz_single(number, cache)
+        self.assert_(v == 6)
+
+    #test cache check (note: wrong value used in cache to show that it was not computed by the function)
+    def test_collatz_single1 (self) :
+        number = 5
+        cache = [-1, -1, -1, -1, -1, 8, -1, -1]
+        v = collatz_single(number, cache)
+        self.assert_(v == 8)
 
 # ----
 # main
