@@ -69,9 +69,14 @@ class TestCollatz (unittest.TestCase) :
         self.assert_(v == 6)
     
     #test inclusive range
-    def test_eval_6 (self) :
+    def test_eval_7 (self) :
         v = collatz_eval((4, 5))
         self.assert_(v == 6)
+
+    #test inclusive range
+    def test_eval_7 (self) :
+        v = collatz_eval((3, 4))
+        self.assert_(v == 8)
 
     # -----
     # print
@@ -123,6 +128,20 @@ class TestCollatz (unittest.TestCase) :
         cache = [-1, -1, -1, 5, -1, -1, -1, -1]
         v = collatz_single(number, cache)
         self.assert_(v == 5)
+    
+    #test empty cache
+    def test_collatz_single5 (self) :
+        number = 1
+        cache = [-1, -1, -1, -1, -1, -1, -1, -1]
+        v = collatz_single(number, cache)
+        self.assert_(v == 1)
+
+    #loop edge case: shouldn't access cache because it doesn't enter the loop
+    def test_collatz_single6 (self) :
+        number = 1
+        cache = [-1, 5, -1, 5, -1, -1, -1, -1]
+        v = collatz_single(number, cache)
+        self.assert_(v == 1)
 
 # ----
 # main
