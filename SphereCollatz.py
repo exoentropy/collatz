@@ -11,7 +11,7 @@ def collatz_read (r) :
 
 def collatz_eval ((i, j)) :
     #-1 implies that cache has not been written to for this number
-    cache = [-1] * 1000000
+    cache = [-1] * 250000
     #error checking; switch i and j if range is invalid
     if (i > j):
         iTemp = i
