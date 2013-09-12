@@ -74,9 +74,21 @@ class TestCollatz (unittest.TestCase) :
         self.assert_(v == 6)
 
     #test inclusive range
-    def test_eval_7 (self) :
+    def test_eval_8 (self) :
         v = collatz_eval((3, 4))
         self.assert_(v == 8)
+
+    def test_eval_9 (self) :
+        v = collatz_eval((10, 1))
+        self.assert_(v == 20)
+
+    def test_eval_10 (self) :
+        v = collatz_eval((200, 100))
+        self.assert_(v == 125)
+
+    def test_eval_11 (self) :
+        v = collatz_eval((210, 201))
+        self.assert_(v == 89)
 
     # -----
     # print
